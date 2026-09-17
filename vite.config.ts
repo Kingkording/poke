@@ -74,12 +74,17 @@ export const sharedConfig: UserConfigFnPromise = async ({ mode }) => {
 // biome-ignore lint/style/noDefaultExport: required for Vite
 export default defineConfig(async config => {
   const { mode, command } = config;
-  const envPort = Number(loadEnv(mode, process.cwd()).VITE_PORT);
+  const env = loadEnv(mode, process.cwd());
+  const envPort = Number(env.VITE_PORT);
 
   return {
     ...(await sharedConfig(config)),
-    base: "/poke/",
-    publicDir: command === "serve" ? "assets" : false,
+    // Fix 1: Set base path to match your GitHub Pages repository subpath
+    base: mode === "production" ? "/poke/" : "/",
+    
+    // Fix 2: Keep public assets available for both serve and build commands
+    publicDir: "assets",
+
     server: {
       port: Number.isNaN(envPort) ? 8000 : envPort,
     },
