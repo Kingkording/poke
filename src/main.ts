@@ -1,5 +1,11 @@
+/*
+ * SPDX-FileCopyrightText: 2024-2026 Pagefault Games
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import "#app/polyfills"; // All polyfills MUST be loaded first for side effects
-import "#init/init-manifest"; // initializes the manifest, must be done *before* i18n is initialized due to being used for caching
+// import "#init/init-manifest"; // Disabled to stop 404 fetches for PWA assets
 import "#app/i18n"; // Initializes i18n on import
 
 import { InvertPostFX } from "#app/pipelines/invert";
