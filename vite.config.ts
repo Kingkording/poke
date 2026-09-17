@@ -79,11 +79,9 @@ export default defineConfig(async config => {
 
   return {
     ...(await sharedConfig(config)),
-    // Fix 1: Set base path to match your GitHub Pages repository subpath
-    base: mode === "production" ? "/poke/" : "/",
     
-    // Fix 2: Keep public assets available for both serve and build commands
-    publicDir: "assets",
+    // Always enforce subpath for GitHub Pages deployments regardless of build mode
+    base: process.env.VITE_BASE_PATH || "/poke/",
 
     server: {
       port: Number.isNaN(envPort) ? 8000 : envPort,
