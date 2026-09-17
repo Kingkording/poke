@@ -37,11 +37,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile --ignore-scripts
 
-      - name: Build offline app
-        run: pnpm run build:app -- --base=/poke/
-
-      - name: Create .nojekyll
-        run: touch dist/.nojekyll
+      - name: Build app
+        env:
+          BASE_URL: /poke/
+          VITE_BASE_PATH: /poke/
+        run: |
+          pnpm run build:app
+          touch dist/.nojekyll
 
       - name: Upload static artifact
         uses: actions/upload-pages-artifact@v3
